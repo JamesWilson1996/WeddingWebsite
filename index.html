@@ -69,19 +69,14 @@
     <section class="navigation">
         <header>
             <div class="header-content">
-                <div class="logo"><a href="#"><img src="img/logo.png" alt="Logo"></a></div>
+                <!--<div class="logo"><a href="#"><img src="img/logo.png" alt="Logo"></a></div>-->
                 <div class="header-nav">
                     <nav>
                         <ul class="primary-nav">
-                            <!--<li><a href="#intro">How we met</a></li>-->
-                            <li><a href="#events">Events</a></li>
-                            <!--<li><a href="#instagram">Instagram</a></li>-->
-                            <!--<li><a href="#eng-pics">Engagement</a></li>-->
-                            <li class="hidden-sm hidden-xs"><a href="#video-bg">Glimpse of the venue</a></li>
-                        </ul>
-                        <ul class="member-actions">
+                            <li><a href="#events">Timetable</a></li>
                             <li><a href="#map" class="login">Venue</a></li>
-                            <li><a href="#rsvp" class="btn-white btn-small">RSVP</a></li>
+                            <li><a href="#hotels">Hotels</a></li>
+                            <li><a href="#rsvp">RSVP</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -311,7 +306,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <h3>What are you waiting for?</h3>
-                <p>We would greatly appreciate if you could RSVP before a date</p>
+                <p>We would greatly appreciate if you could RSVP before a date. Please include Allergies/Dietary Requirements below.</p>
                 <form id="rsvp-form" class="rsvp-form"
                       action=""
                       method="POST">
@@ -346,6 +341,18 @@
                                                                 required>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-input-group">
+                                <i class="fa fa-users"></i><input name="dietary_requirements" class=""
+                                                                placeholder="Dietary Requirements">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="checkbox" id="consent" name="consent" required>
+                        <label for="consent">I agree to have my data stored for the purpose of RSVPing</label>
                     </div>
                     <div class="row">
                         <div class="col-md-12" id="alert-wrapper"></div>
