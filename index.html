@@ -361,6 +361,21 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <div id="rsvp-modal-no" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>&times;</span>
+                    </button>
+                    <div class="section-padding">
+                        <h3>Thank you!</h3>
+                        <p>We are sorry to hear you won't be able to join us.</p>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -369,6 +384,15 @@
                 <form id="rsvp-form" class="rsvp-form"
                       action=""
                       method="POST">
+                    
+                    <div class="row">
+                        <label for="rsvp_status">Are you able to attend?</label><br>
+                        <select id="rsvp_status" name="rsvp_status" required>
+                            <option value="">Please select...</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div><br>
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-input-group">
@@ -404,7 +428,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-input-group">
-                                <i class="fa fa-users"></i><input name="dietary_requirements" class=""
+                                <i class="fa fa-users"></i><input name="dietary_requirements" id="dietary_requirements" class=""
                                                                 placeholder="Dietary Requirements">
                             </div>
                         </div>
