@@ -1,498 +1,309 @@
-$(document).ready(function () {
-
-    /***************** Waypoints ******************/
-
-    $('.wp1').waypoint(function () {
-        $('.wp1').addClass('animated fadeInLeft');
-    }, {
-        offset: '75%'
-    });
-    $('.wp2').waypoint(function () {
-        $('.wp2').addClass('animated fadeInRight');
-    }, {
-        offset: '75%'
-    });
-    $('.wp3').waypoint(function () {
-        $('.wp3').addClass('animated fadeInLeft');
-    }, {
-        offset: '75%'
-    });
-    $('.wp4').waypoint(function () {
-        $('.wp4').addClass('animated fadeInRight');
-    }, {
-        offset: '75%'
-    });
-    $('.wp5').waypoint(function () {
-        $('.wp5').addClass('animated fadeInLeft');
-    }, {
-        offset: '75%'
-    });
-    $('.wp6').waypoint(function () {
-        $('.wp6').addClass('animated fadeInRight');
-    }, {
-        offset: '75%'
-    });
-    $('.wp7').waypoint(function () {
-        $('.wp7').addClass('animated fadeInUp');
-    }, {
-        offset: '75%'
-    });
-    $('.wp8').waypoint(function () {
-        $('.wp8').addClass('animated fadeInLeft');
-    }, {
-        offset: '75%'
-    });
-    $('.wp9').waypoint(function () {
-        $('.wp9').addClass('animated fadeInRight');
-    }, {
-        offset: '75%'
-    });
-
-    /***************** Initiate Flexslider ******************/
-    $('.flexslider').flexslider({
-        animation: "slide"
-    });
-
-    /***************** Initiate Fancybox ******************/
-
-    $('.single_image').fancybox({
-        padding: 4
-    });
-
-    $('.fancybox').fancybox({
-        padding: 4,
-        width: 1000,
-        height: 800
-    });
-
-    /***************** Tooltips ******************/
-    $('[data-toggle="tooltip"]').tooltip();
-
-    /***************** Nav Transformicon ******************/
-
-    /* When user clicks the Icon */
-    $('.nav-toggle').click(function () {
-        $(this).toggleClass('active');
-        $('.header-nav').toggleClass('open');
-        event.preventDefault();
-    });
-    /* When user clicks a link */
-    $('.header-nav li a').click(function () {
-        $('.nav-toggle').toggleClass('active');
-        $('.header-nav').toggleClass('open');
-
-    });
-
-    /***************** Header BG Scroll ******************/
-
-    $(function () {
-        $(window).scroll(function () {
-            var scroll = $(window).scrollTop();
-
-            if (scroll >= 20) {
-                $('section.navigation').addClass('fixed');
-                $('header').css({
-                    "border-bottom": "none",
-                    "padding": "35px 0"
-                });
-                $('header .member-actions').css({
-                    "top": "26px",
-                });
-                $('header .navicon').css({
-                    "top": "34px",
-                });
-            } else {
-                $('section.navigation').removeClass('fixed');
-                $('header').css({
-                    "border-bottom": "solid 1px rgba(255, 255, 255, 0.2)",
-                    "padding": "50px 0"
-                });
-                $('header .member-actions').css({
-                    "top": "41px",
-                });
-                $('header .navicon').css({
-                    "top": "48px",
-                });
-            }
-        });
-    });
-    /***************** Smooth Scrolling ******************/
-
-    $(function () {
-
-        $('a[href*=#]:not([href=#])').click(function () {
-            if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && location.hostname === this.hostname) {
-
-                var target = $(this.hash);
-                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
-                if (target.length) {
-                    $('html,body').animate({
-                        scrollTop: target.offset().top - 90
-                    }, 2000);
-                    return false;
-                }
-            }
-        });
-
-    });
-
-    /********************** Social Share buttons ***********************/
-    var share_bar = document.getElementsByClassName('share-bar');
-    var po = document.createElement('script');
-    po.type = 'text/javascript';
-    po.async = true;
-    po.src = 'https://apis.google.com/js/platform.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(po, s);
-
-    for (var i = 0; i < share_bar.length; i++) {
-        var html = '<iframe allowtransparency="true" frameborder="0" scrolling="no"' +
-            'src="https://platform.twitter.com/widgets/tweet_button.html?url=' + encodeURIComponent(window.location) + '&amp;text=' + encodeURIComponent(document.title) + '&amp;via=ramswarooppatra&amp;hashtags=ramandantara&amp;count=horizontal"' +
-            'style="width:105px; height:21px;">' +
-            '</iframe>' +
-
-            '<iframe src="//www.facebook.com/plugins/like.php?href=' + encodeURIComponent(window.location) + '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21&amp;appId=101094500229731&amp;width=150" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe>' +
-
-            '<div class="g-plusone" data-size="medium"></div>';
-
-        // '<iframe src="https://plusone.google.com/_/+1/fastbutton?bsv&amp;size=medium&amp;url=' + encodeURIComponent(window.location) + '" allowtransparency="true" frameborder="0" scrolling="no" title="+1" style="width:105px; height:21px;"></iframe>';
-
-        share_bar[i].innerHTML = html;
-        share_bar[i].style.display = 'inline-block';
-    }
-
-    /********************** Embed youtube video *********************/
-    $('.player').YTPlayer();
-
-
-    /********************** Toggle Map Content **********************/
-    $('#btn-show-map').click(function () {
-        $('#map-content').toggleClass('toggle-map-content');
-        $('#btn-show-content').toggleClass('toggle-map-content');
-    });
-    $('#btn-show-content').click(function () {
-        $('#map-content').toggleClass('toggle-map-content');
-        $('#btn-show-content').toggleClass('toggle-map-content');
-    });
-
-    /********************** Add to Calendar **********************/
-    var myCalendar = createCalendar({
-        options: {
-            class: '',
-            // You can pass an ID. If you don't, one will be generated for you
-            id: ''
-        },
-        data: {
-            // Event title
-            title: "Becky and James Wedding",
-
-            // Event start date
-            start: new Date('Nov 6, 2025 13:00'),
-
-            // Event duration (IN MINUTES)
-            // duration: 120,
-
-            // You can also choose to set an end time
-            // If an end time is set, this will take precedence over duration
-            end: new Date('Nov 6, 2025 00:00'),
-
-            // Event Address
-            address: 'Tithe Barn, Bolton Abbey, Skipton, BD23 6EX',
-
-            // Event Description
-            description: "We can't wait to see you on our big day. For any queries or issues, please contact James on 07415 700445."
-        }
-    });
-
-    $('#add-to-cal').html(myCalendar);
-
-
-    /********************** RSVP **********************/
-    $('#rsvp-form').on('submit', function (e) {
-        e.preventDefault();
-        var data = $(this).serialize();
-
-        $('#alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
-
-        if (MD5($('#invite_code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb'
-            && MD5($('#invite_code').val()) !== '9e20abcf5889d4c8745cb43ce925e49e') {
-            $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
-        } else {
-            $.post('https://script.google.com/macros/s/AKfycbxV-5FoF20QkguOg8JPV38pGVero-v-87wh6JzBc-GomLRVlH0Fw3lhDZ6-AWFqB9SZAg/exec', data)
-                .done(function (data) {
-                    console.log(data);
-                    if (data.result === "error") {
-                        $('#alert-wrapper').html(alert_markup('danger', data.message));
-                    } else {
-                        $('#alert-wrapper').html('');
-                        if ($('#rsvp_status').val().toLowerCase() === "yes") {
-                            $('#rsvp-modal').modal('show');
-                        }
-                        else {
-                            $('#rsvp-modal-no').modal('show');
-                        }
-                    }
-                })
-                .fail(function (data) {
-                    console.log(data);
-                    $('#alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
-                });
-        }
-    });
-
-    });
-
-/********************** Extras **********************/
-
-// Google map
 function initMap() {
-    var location = {lat: 53.980631837971, lng: -1.8907318539801654};
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
-        zoom: 15,
-        center: location,
-        scrollwheel: false
-    });
-
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map
-    });
+    var e = { lat: 53.980631837971, lng: -1.8907318539801654 },
+        a = new google.maps.Map(document.getElementById("map-canvas"), { zoom: 15, center: e, scrollwheel: !1 });
+    new google.maps.Marker({ position: e, map: a });
 }
-
 function initBBSRMap() {
-    var la_fiesta = {lat: 53.980631837971, lng: -1.8907318539801654};
-    var map = new google.maps.Map(document.getElementById('map-canvas'), {
-        zoom: 15,
-        center: la_fiesta,
-        scrollwheel: false
-    });
-
-    var marker = new google.maps.Marker({
-        position: la_fiesta,
-        map: map
-    });
+    var e = { lat: 53.980631837971, lng: -1.8907318539801654 },
+        a = new google.maps.Map(document.getElementById("map-canvas"), { zoom: 15, center: e, scrollwheel: !1 });
+    new google.maps.Marker({ position: e, map: a });
 }
-
-// alert_markup
-function alert_markup(alert_type, msg) {
-    return '<div class="alert alert-' + alert_type + '" role="alert">' + msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span>&times;</span></button></div>';
+function alert_markup(e, a) {
+    return '<div class="alert alert-' + e + '" role="alert">' + a + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span>&times;</span></button></div>';
 }
-
-// MD5 Encoding
-var MD5 = function (string) {
-
-    function RotateLeft(lValue, iShiftBits) {
-        return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+$(document).ready(function () {
+    $(".wp1").waypoint(
+        function () {
+            $(".wp1").addClass("animated fadeInLeft");
+        },
+        { offset: "75%" }
+    ),
+        $(".wp2").waypoint(
+            function () {
+                $(".wp2").addClass("animated fadeInRight");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp3").waypoint(
+            function () {
+                $(".wp3").addClass("animated fadeInLeft");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp4").waypoint(
+            function () {
+                $(".wp4").addClass("animated fadeInRight");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp5").waypoint(
+            function () {
+                $(".wp5").addClass("animated fadeInLeft");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp6").waypoint(
+            function () {
+                $(".wp6").addClass("animated fadeInRight");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp7").waypoint(
+            function () {
+                $(".wp7").addClass("animated fadeInUp");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp8").waypoint(
+            function () {
+                $(".wp8").addClass("animated fadeInLeft");
+            },
+            { offset: "75%" }
+        ),
+        $(".wp9").waypoint(
+            function () {
+                $(".wp9").addClass("animated fadeInRight");
+            },
+            { offset: "75%" }
+        ),
+        $(".flexslider").flexslider({ animation: "slide" }),
+        $(".single_image").fancybox({ padding: 4 }),
+        $(".fancybox").fancybox({ padding: 4, width: 1e3, height: 800 }),
+        $('[data-toggle="tooltip"]').tooltip(),
+        $(".nav-toggle").click(function () {
+            $(this).toggleClass("active"), $(".header-nav").toggleClass("open"), event.preventDefault();
+        }),
+        $(".header-nav li a").click(function () {
+            $(".nav-toggle").toggleClass("active"), $(".header-nav").toggleClass("open");
+        }),
+        $(function () {
+            $(window).scroll(function () {
+                20 <= $(window).scrollTop()
+                    ? ($("section.navigation").addClass("fixed"), $("header").css({ "border-bottom": "none", padding: "35px 0" }), $("header .member-actions").css({ top: "26px" }), $("header .navicon").css({ top: "34px" }))
+                    : ($("section.navigation").removeClass("fixed"),
+                      $("header").css({ "border-bottom": "solid 1px rgba(255, 255, 255, 0.2)", padding: "50px 0" }),
+                      $("header .member-actions").css({ top: "41px" }),
+                      $("header .navicon").css({ top: "48px" }));
+            });
+        }),
+        $(function () {
+            $("a[href*=#]:not([href=#])").click(function () {
+                if (location.pathname.replace(/^\//, "") === this.pathname.replace(/^\//, "") && location.hostname === this.hostname) {
+                    var e = $(this.hash);
+                    if ((e = e.length ? e : $("[name=" + this.hash.slice(1) + "]")).length) return $("html,body").animate({ scrollTop: e.offset().top - 90 }, 2e3), !1;
+                }
+            });
+        });
+    var e = document.getElementsByClassName("share-bar"),
+        a = document.createElement("script");
+    (a.type = "text/javascript"), (a.async = !0), (a.src = "https://apis.google.com/js/platform.js");
+    var t = document.getElementsByTagName("script")[0];
+    t.parentNode.insertBefore(a, t);
+    for (var n = 0; n < e.length; n++) {
+        var o =
+            '<iframe allowtransparency="true" frameborder="0" scrolling="no"src="https://platform.twitter.com/widgets/tweet_button.html?url=' +
+            encodeURIComponent(window.location) +
+            "&amp;text=" +
+            encodeURIComponent(document.title) +
+            '&amp;via=ramswarooppatra&amp;hashtags=ramandantara&amp;count=horizontal"style="width:105px; height:21px;"></iframe><iframe src="//www.facebook.com/plugins/like.php?href=' +
+            encodeURIComponent(window.location) +
+            '&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=21&amp;appId=101094500229731&amp;width=150" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:150px; height:21px;" allowTransparency="true"></iframe><div class="g-plusone" data-size="medium"></div>';
+        (e[n].innerHTML = o), (e[n].style.display = "inline-block");
     }
-
-    function AddUnsigned(lX, lY) {
-        var lX4, lY4, lX8, lY8, lResult;
-        lX8 = (lX & 0x80000000);
-        lY8 = (lY & 0x80000000);
-        lX4 = (lX & 0x40000000);
-        lY4 = (lY & 0x40000000);
-        lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
-        if (lX4 & lY4) {
-            return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
-        }
-        if (lX4 | lY4) {
-            if (lResult & 0x40000000) {
-                return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
+    $(".player").YTPlayer(),
+        $("#btn-show-map").click(function () {
+            $("#map-content").toggleClass("toggle-map-content"), $("#btn-show-content").toggleClass("toggle-map-content");
+        }),
+        $("#btn-show-content").click(function () {
+            $("#map-content").toggleClass("toggle-map-content"), $("#btn-show-content").toggleClass("toggle-map-content");
+        });
+    var r = createCalendar({
+        options: { class: "", id: "" },
+        data: {
+            title: "Becky and James Wedding",
+            start: new Date("Nov 6, 2025 13:00"),
+            end: new Date("Nov 7, 2025 00:00"),
+            address: "Tithe Barn, Bolton Abbey, Skipton, BD23 6EX",
+            description: "We can't wait to see you on our big day. For any queries or issues, please contact James on 07415 700445.",
+        },
+    });
+    $("#add-to-cal").html(r),
+        $("#rsvp-form").on("submit", function (e) {
+            e.preventDefault();
+            var a = $(this).serialize();
+            a = a.concat("&invoker=rsvp");
+            $("#alert-wrapper").html(alert_markup("info", "<strong>Just a sec!</strong> We are saving your details.")),
+                "cc485beea0bdcdb7ad2fa1e7213bd4eb" !== MD5($("#invite_code").val()) && "9e20abcf5889d4c8745cb43ce925e49e" !== MD5($("#invite_code").val())
+                    ? $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."))
+                    : $.post("https://script.google.com/macros/s/AKfycbxJLEJnVkdTMFA_T2WugffeUMFWXfaZ49N5pBqPHXAYu2TqC1Qle1YbYJLcAAHSqdRYfA/exec", a)
+                          .done(function (e) {
+                              console.log(e),
+                                  "error" === e.result
+                                      ? $("#alert-wrapper").html(alert_markup("danger", e.message))
+                                      : ($("#alert-wrapper").html(""), "yes" === $("#rsvp_status").val().toLowerCase() ? $("#rsvp-modal").modal("show") : $("#rsvp-modal-no").modal("show"));
+                          })
+                          .fail(function (e) {
+                              console.log(e), $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> There is some issue with the server. "));
+                          });
+        });
+        $('#request-form').on('submit', function (e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            data = data.concat("&invoker=requests");
+            $('#request-alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
+    
+            if (MD5($('#code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb'
+                && MD5($('#code').val()) !== '9e20abcf5889d4c8745cb43ce925e49e') {
+                $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
             } else {
-                return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+                $.post('https://script.google.com/macros/s/AKfycbxJLEJnVkdTMFA_T2WugffeUMFWXfaZ49N5pBqPHXAYu2TqC1Qle1YbYJLcAAHSqdRYfA/exec', data)
+                    .done(function (data) {
+                        console.log(data);
+                        if (data.result === "error") {
+                            $('#request-alert-wrapper').html(alert_markup('danger', data.message));
+                        } else {
+                            $('#request-alert-wrapper').html(alert_markup('success', 'Thank you for submitting a song request!'));
+                        }
+                    })
+                    .fail(function (data) {
+                        console.log(data);
+                        $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+                    });
             }
-        } else {
-            return (lResult ^ lX8 ^ lY8);
-        }
+        });
+});
+var MD5 = function (e) {
+    function a(e, a) {
+        return (e << a) | (e >>> (32 - a));
     }
-
-    function F(x, y, z) {
-        return (x & y) | ((~x) & z);
+    function t(e, a) {
+        var t, n, o, r, s;
+        return (
+            (o = 2147483648 & e),
+            (r = 2147483648 & a),
+            (s = (1073741823 & e) + (1073741823 & a)),
+            (t = 1073741824 & e) & (n = 1073741824 & a) ? 2147483648 ^ s ^ o ^ r : t | n ? (1073741824 & s ? 3221225472 ^ s ^ o ^ r : 1073741824 ^ s ^ o ^ r) : s ^ o ^ r
+        );
     }
-
-    function G(x, y, z) {
-        return (x & z) | (y & (~z));
+    function n(e, n, o, r, s, _, i) {
+        var l;
+        return (e = t(e, t(t(((l = n) & o) | (~l & r), s), i))), t(a(e, _), n);
     }
-
-    function H(x, y, z) {
-        return (x ^ y ^ z);
+    function o(e, n, o, r, s, _, i) {
+        var l;
+        return (e = t(e, t(t((n & (l = r)) | (o & ~l), s), i))), t(a(e, _), n);
     }
-
-    function I(x, y, z) {
-        return (y ^ (x | (~z)));
+    function r(e, n, o, r, s, _, i) {
+        return (e = t(e, t(t(n ^ o ^ r, s), i))), t(a(e, _), n);
     }
-
-    function FF(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(F(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
-
-    function GG(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(G(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
-
-    function HH(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(H(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
-
-    function II(a, b, c, d, x, s, ac) {
-        a = AddUnsigned(a, AddUnsigned(AddUnsigned(I(b, c, d), x), ac));
-        return AddUnsigned(RotateLeft(a, s), b);
-    };
-
-    function ConvertToWordArray(string) {
-        var lWordCount;
-        var lMessageLength = string.length;
-        var lNumberOfWords_temp1 = lMessageLength + 8;
-        var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
-        var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
-        var lWordArray = Array(lNumberOfWords - 1);
-        var lBytePosition = 0;
-        var lByteCount = 0;
-        while (lByteCount < lMessageLength) {
-            lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-            lBytePosition = (lByteCount % 4) * 8;
-            lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
-            lByteCount++;
-        }
-        lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-        lBytePosition = (lByteCount % 4) * 8;
-        lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
-        lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
-        lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
-        return lWordArray;
-    };
-
-    function WordToHex(lValue) {
-        var WordToHexValue = "", WordToHexValue_temp = "", lByte, lCount;
-        for (lCount = 0; lCount <= 3; lCount++) {
-            lByte = (lValue >>> (lCount * 8)) & 255;
-            WordToHexValue_temp = "0" + lByte.toString(16);
-            WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
-        }
-        return WordToHexValue;
-    };
-
-    function Utf8Encode(string) {
-        string = string.replace(/\r\n/g, "\n");
-        var utftext = "";
-
-        for (var n = 0; n < string.length; n++) {
-
-            var c = string.charCodeAt(n);
-
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            }
-            else if ((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-            else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-
-        }
-
-        return utftext;
-    };
-
-    var x = Array();
-    var k, AA, BB, CC, DD, a, b, c, d;
-    var S11 = 7, S12 = 12, S13 = 17, S14 = 22;
-    var S21 = 5, S22 = 9, S23 = 14, S24 = 20;
-    var S31 = 4, S32 = 11, S33 = 16, S34 = 23;
-    var S41 = 6, S42 = 10, S43 = 15, S44 = 21;
-
-    string = Utf8Encode(string);
-
-    x = ConvertToWordArray(string);
-
-    a = 0x67452301;
-    b = 0xEFCDAB89;
-    c = 0x98BADCFE;
-    d = 0x10325476;
-
-    for (k = 0; k < x.length; k += 16) {
-        AA = a;
-        BB = b;
-        CC = c;
-        DD = d;
-        a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
-        d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
-        c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
-        b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
-        a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
-        d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
-        c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
-        b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
-        a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
-        d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
-        c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
-        b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
-        a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
-        d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
-        c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
-        b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
-        a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
-        d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
-        c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
-        b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
-        a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
-        d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
-        c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
-        b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
-        a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
-        d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
-        c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
-        b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
-        a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
-        d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
-        c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
-        b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
-        a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
-        d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
-        c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
-        b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
-        a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
-        d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
-        c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
-        b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
-        a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
-        d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
-        c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
-        b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
-        a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
-        d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
-        c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
-        b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
-        a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
-        d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
-        c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
-        b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
-        a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
-        d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
-        c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
-        b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
-        a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
-        d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
-        c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
-        b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
-        a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
-        d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
-        c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
-        b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
-        a = AddUnsigned(a, AA);
-        b = AddUnsigned(b, BB);
-        c = AddUnsigned(c, CC);
-        d = AddUnsigned(d, DD);
+    function s(e, n, o, r, s, _, i) {
+        return (e = t(e, t(t(o ^ (n | ~r), s), i))), t(a(e, _), n);
     }
-
-    var temp = WordToHex(a) + WordToHex(b) + WordToHex(c) + WordToHex(d);
-
-    return temp.toLowerCase();
+    function _(e) {
+        var a,
+            t = "",
+            n = "";
+        for (a = 0; a <= 3; a++) t += (n = "0" + ((e >>> (8 * a)) & 255).toString(16)).substr(n.length - 2, 2);
+        return t;
+    }
+    var i,
+        l,
+        p,
+        c,
+        d,
+        f,
+        m,
+        g,
+        h,
+        u = [];
+    for (
+        u = (function (e) {
+            for (var a, t = e.length, n = t + 8, o = 16 * (1 + (n - (n % 64)) / 64), r = Array(o - 1), s = 0, _ = 0; _ < t; ) (s = (_ % 4) * 8), (r[(a = (_ - (_ % 4)) / 4)] = r[a] | (e.charCodeAt(_) << s)), _++;
+            return (s = (_ % 4) * 8), (r[(a = (_ - (_ % 4)) / 4)] = r[a] | (128 << s)), (r[o - 2] = t << 3), (r[o - 1] = t >>> 29), r;
+        })(
+            (e = (function (e) {
+                e = e.replace(/\r\n/g, "\n");
+                for (var a = "", t = 0; t < e.length; t++) {
+                    var n = e.charCodeAt(t);
+                    n < 128
+                        ? (a += String.fromCharCode(n))
+                        : (127 < n && n < 2048 ? (a += String.fromCharCode((n >> 6) | 192)) : ((a += String.fromCharCode((n >> 12) | 224)), (a += String.fromCharCode(((n >> 6) & 63) | 128))), (a += String.fromCharCode((63 & n) | 128)));
+                }
+                return a;
+            })(e))
+        ),
+            f = 1732584193,
+            m = 4023233417,
+            g = 2562383102,
+            h = 271733878,
+            i = 0;
+        i < u.length;
+        i += 16
+    )
+        (f = n((l = f), (p = m), (c = g), (d = h), u[i + 0], 7, 3614090360)),
+            (h = n(h, f, m, g, u[i + 1], 12, 3905402710)),
+            (g = n(g, h, f, m, u[i + 2], 17, 606105819)),
+            (m = n(m, g, h, f, u[i + 3], 22, 3250441966)),
+            (f = n(f, m, g, h, u[i + 4], 7, 4118548399)),
+            (h = n(h, f, m, g, u[i + 5], 12, 1200080426)),
+            (g = n(g, h, f, m, u[i + 6], 17, 2821735955)),
+            (m = n(m, g, h, f, u[i + 7], 22, 4249261313)),
+            (f = n(f, m, g, h, u[i + 8], 7, 1770035416)),
+            (h = n(h, f, m, g, u[i + 9], 12, 2336552879)),
+            (g = n(g, h, f, m, u[i + 10], 17, 4294925233)),
+            (m = n(m, g, h, f, u[i + 11], 22, 2304563134)),
+            (f = n(f, m, g, h, u[i + 12], 7, 1804603682)),
+            (h = n(h, f, m, g, u[i + 13], 12, 4254626195)),
+            (g = n(g, h, f, m, u[i + 14], 17, 2792965006)),
+            (f = o(f, (m = n(m, g, h, f, u[i + 15], 22, 1236535329)), g, h, u[i + 1], 5, 4129170786)),
+            (h = o(h, f, m, g, u[i + 6], 9, 3225465664)),
+            (g = o(g, h, f, m, u[i + 11], 14, 643717713)),
+            (m = o(m, g, h, f, u[i + 0], 20, 3921069994)),
+            (f = o(f, m, g, h, u[i + 5], 5, 3593408605)),
+            (h = o(h, f, m, g, u[i + 10], 9, 38016083)),
+            (g = o(g, h, f, m, u[i + 15], 14, 3634488961)),
+            (m = o(m, g, h, f, u[i + 4], 20, 3889429448)),
+            (f = o(f, m, g, h, u[i + 9], 5, 568446438)),
+            (h = o(h, f, m, g, u[i + 14], 9, 3275163606)),
+            (g = o(g, h, f, m, u[i + 3], 14, 4107603335)),
+            (m = o(m, g, h, f, u[i + 8], 20, 1163531501)),
+            (f = o(f, m, g, h, u[i + 13], 5, 2850285829)),
+            (h = o(h, f, m, g, u[i + 2], 9, 4243563512)),
+            (g = o(g, h, f, m, u[i + 7], 14, 1735328473)),
+            (f = r(f, (m = o(m, g, h, f, u[i + 12], 20, 2368359562)), g, h, u[i + 5], 4, 4294588738)),
+            (h = r(h, f, m, g, u[i + 8], 11, 2272392833)),
+            (g = r(g, h, f, m, u[i + 11], 16, 1839030562)),
+            (m = r(m, g, h, f, u[i + 14], 23, 4259657740)),
+            (f = r(f, m, g, h, u[i + 1], 4, 2763975236)),
+            (h = r(h, f, m, g, u[i + 4], 11, 1272893353)),
+            (g = r(g, h, f, m, u[i + 7], 16, 4139469664)),
+            (m = r(m, g, h, f, u[i + 10], 23, 3200236656)),
+            (f = r(f, m, g, h, u[i + 13], 4, 681279174)),
+            (h = r(h, f, m, g, u[i + 0], 11, 3936430074)),
+            (g = r(g, h, f, m, u[i + 3], 16, 3572445317)),
+            (m = r(m, g, h, f, u[i + 6], 23, 76029189)),
+            (f = r(f, m, g, h, u[i + 9], 4, 3654602809)),
+            (h = r(h, f, m, g, u[i + 12], 11, 3873151461)),
+            (g = r(g, h, f, m, u[i + 15], 16, 530742520)),
+            (f = s(f, (m = r(m, g, h, f, u[i + 2], 23, 3299628645)), g, h, u[i + 0], 6, 4096336452)),
+            (h = s(h, f, m, g, u[i + 7], 10, 1126891415)),
+            (g = s(g, h, f, m, u[i + 14], 15, 2878612391)),
+            (m = s(m, g, h, f, u[i + 5], 21, 4237533241)),
+            (f = s(f, m, g, h, u[i + 12], 6, 1700485571)),
+            (h = s(h, f, m, g, u[i + 3], 10, 2399980690)),
+            (g = s(g, h, f, m, u[i + 10], 15, 4293915773)),
+            (m = s(m, g, h, f, u[i + 1], 21, 2240044497)),
+            (f = s(f, m, g, h, u[i + 8], 6, 1873313359)),
+            (h = s(h, f, m, g, u[i + 15], 10, 4264355552)),
+            (g = s(g, h, f, m, u[i + 6], 15, 2734768916)),
+            (m = s(m, g, h, f, u[i + 13], 21, 1309151649)),
+            (f = s(f, m, g, h, u[i + 4], 6, 4149444226)),
+            (h = s(h, f, m, g, u[i + 11], 10, 3174756917)),
+            (g = s(g, h, f, m, u[i + 2], 15, 718787259)),
+            (m = s(m, g, h, f, u[i + 9], 21, 3951481745)),
+            (f = t(f, l)),
+            (m = t(m, p)),
+            (g = t(g, c)),
+            (h = t(h, d));
+    return (_(f) + _(m) + _(g) + _(h)).toLowerCase();
 };
