@@ -4,9 +4,10 @@ var TO_ADDRESS = "jamesawilson1996@gmail.com, beckyholden99@gmail.com"; // email
  * This method is the entry point.
  */
 function doPost(e) {
+
   var mailData = e.parameters;
 
-  if (mailData.invite_code != "61125") { // validate invite code before saving data
+  if (mailData.invite_code != "61125" && mailData.invite_code != "25116") { // validate invite code before saving data
     Logger.log("Incorrect Invite Code");
     return ContentService
         .createTextOutput(JSON.stringify({"result":"error", "message": "Sorry, your invite code (" + mailData.invite_code + ") is incorrect."}))
@@ -33,6 +34,13 @@ function rsvp(e) {
     var mailData = e.parameters; // just create a slightly nicer variable name for the data
 
     var update = compareValidEmail(mailData.email[0], "rsvp")
+
+    if (mailData.invite_code[0] == "61125") {
+      e.parameter.guest_type = "All Day";
+    }
+    else {
+      e.parameter.guest_type = "Evening";
+    }
 
     record_data(e, 'responses', update);
     

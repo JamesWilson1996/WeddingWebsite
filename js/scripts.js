@@ -132,10 +132,11 @@ $(document).ready(function () {
             e.preventDefault();
             var a = $(this).serialize();
             a = a.concat("&invoker=rsvp");
-            $("#alert-wrapper").html(alert_markup("info", "<strong>Just a sec!</strong> We are saving your details.")),
-                "cc485beea0bdcdb7ad2fa1e7213bd4eb" !== MD5($("#invite_code").val()) && "9e20abcf5889d4c8745cb43ce925e49e" !== MD5($("#invite_code").val())
-                    ? $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."))
-                    : $.post("https://script.google.com/macros/s/AKfycbxyr4qWdB0L26eTidahermTtRB0quO8k7xZxiiCNAI0_FD30ex7QmuoNc586my_-I7Ptg/exec", a)
+            $("#alert-wrapper").html(alert_markup("info", "<strong>Just a sec!</strong> We are saving your details."));
+            if (MD5($('#invite_code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb' && MD5($('#invite_code').val()) !== '5f22e82f3d2c279d57c76a0513276abb') {
+                $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."));
+            } else {
+                $.post("https://script.google.com/macros/s/AKfycby_uwBXKeB334X0OF5jVvkh9t0TxrE66XOH-TtmalpVL3oPR3b69WvjijfiPRJx3WNJDQ/exec", a)
                           .done(function (e) {
                               console.log(e),
                                   "error" === e.result
@@ -145,6 +146,7 @@ $(document).ready(function () {
                           .fail(function (e) {
                               console.log(e), $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> There is some issue with the server. "));
                           });
+            }
         });
         $('#request-form').on('submit', function (e) {
             e.preventDefault();
@@ -152,11 +154,10 @@ $(document).ready(function () {
             data = data.concat("&invoker=requests");
             $('#request-alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
     
-            if (MD5($('#code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb'
-                && MD5($('#code').val()) !== '9e20abcf5889d4c8745cb43ce925e49e') {
+            if (MD5($('#code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb' && MD5($('#code').val()) !== '5f22e82f3d2c279d57c76a0513276abb') {
                 $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
             } else {
-                $.post('https://script.google.com/macros/s/AKfycbxyr4qWdB0L26eTidahermTtRB0quO8k7xZxiiCNAI0_FD30ex7QmuoNc586my_-I7Ptg/exec', data)
+                $.post('https://script.google.com/macros/s/AKfycby_uwBXKeB334X0OF5jVvkh9t0TxrE66XOH-TtmalpVL3oPR3b69WvjijfiPRJx3WNJDQ/exec', data)
                     .done(function (data) {
                         console.log(data);
                         if (data.result === "error") {
