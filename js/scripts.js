@@ -117,60 +117,68 @@ $(document).ready(function () {
         $("#btn-show-content").click(function () {
             $("#map-content").toggleClass("toggle-map-content"), $("#btn-show-content").toggleClass("toggle-map-content");
         });
-    var r = createCalendar({
-        options: { class: "", id: "" },
-        data: {
-            title: "Becky and James Wedding",
-            start: new Date("Nov 6, 2025 13:00"),
-            end: new Date("Nov 7, 2025 00:00"),
-            address: "Tithe Barn, Bolton Abbey, Skipton, BD23 6EX",
-            description: "We can't wait to see you on our big day. For any queries or issues, please contact James on 07415 700445.",
-        },
+    $("#rsvp-form").on("submit", function (e) {
+        e.preventDefault();
+        var a = $(this).serialize();
+        a = a.concat("&invoker=rsvp");
+        $("#alert-wrapper").html(alert_markup("info", "<strong>Just a sec!</strong> We are saving your details."));
+        if (MD5($('#invite_code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb' && MD5($('#invite_code').val()) !== '5f22e82f3d2c279d57c76a0513276abb') {
+            $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."));
+        } else {
+            if (MD5($('#invite_code').val()) == 'cc485beea0bdcdb7ad2fa1e7213bd4eb') {
+                var startDate = new Date("Nov 6, 2025 13:30");
+            }
+            else {
+                var startDate = new Date("Nov 6, 2025 19:00");
+            }
+
+            var r = createCalendar({
+                options: { class: "", id: "" },
+                data: {
+                    title: "Becky and James Wedding",
+                    start: startDate,
+                    end: new Date("Nov 7, 2025 00:00"),
+                    address: "Tithe Barn, Bolton Abbey, Skipton, BD23 6EX",
+                    description: "We can't wait to see you on our big day. For any queries or issues, please contact James on 07415 700445.",
+                },
+            });
+            $("#add-to-cal").html(r)
+
+            $.post("https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec", a)
+                        .done(function (e) {
+                            console.log(e),
+                                "error" === e.result
+                                    ? $("#alert-wrapper").html(alert_markup("danger", e.message))
+                                    : ($("#alert-wrapper").html(""), "yes" === $("#rsvp_status").val().toLowerCase() ? $("#rsvp-modal").modal("show") : $("#rsvp-modal-no").modal("show"));
+                        })
+                        .fail(function (e) {
+                            console.log(e), $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> There is some issue with the server. "));
+                        });
+        }
     });
-    $("#add-to-cal").html(r),
-        $("#rsvp-form").on("submit", function (e) {
-            e.preventDefault();
-            var a = $(this).serialize();
-            a = a.concat("&invoker=rsvp");
-            $("#alert-wrapper").html(alert_markup("info", "<strong>Just a sec!</strong> We are saving your details."));
-            if (MD5($('#invite_code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb' && MD5($('#invite_code').val()) !== '5f22e82f3d2c279d57c76a0513276abb') {
-                $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."));
-            } else {
-                $.post("https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec", a)
-                          .done(function (e) {
-                              console.log(e),
-                                  "error" === e.result
-                                      ? $("#alert-wrapper").html(alert_markup("danger", e.message))
-                                      : ($("#alert-wrapper").html(""), "yes" === $("#rsvp_status").val().toLowerCase() ? $("#rsvp-modal").modal("show") : $("#rsvp-modal-no").modal("show"));
-                          })
-                          .fail(function (e) {
-                              console.log(e), $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> There is some issue with the server. "));
-                          });
-            }
-        });
-        $('#request-form').on('submit', function (e) {
-            e.preventDefault();
-            var data = $(this).serialize();
-            data = data.concat("&invoker=requests");
-            $('#request-alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your request.'));
-            if (!$("#song_url").val().includes("spotify") && !$("#song_url").val().includes("youtube") && !$("#song_url").val().includes("youtu.be")) {
-                $("#request-alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Only Spotify/YouTube links are supported. "));
-            } else {
-                $.post('https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec', data)
-                    .done(function (data) {
-                        console.log(data);
-                        if (data.result === "error") {
-                            $('#request-alert-wrapper').html(alert_markup('danger', data.message));
-                        } else {
-                            $('#request-alert-wrapper').html(alert_markup('success', 'Thank you for submitting a song request!'));
-                        }
-                    })
-                    .fail(function (data) {
-                        console.log(data);
-                        $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
-                    });
-            }
-        });
+    $('#request-form').on('submit', function (e) {
+        e.preventDefault();
+        var data = $(this).serialize();
+        data = data.concat("&invoker=requests");
+        $('#request-alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your request.'));
+        if (!$("#song_url").val().includes("spotify") && !$("#song_url").val().includes("youtube") && !$("#song_url").val().includes("youtu.be")) {
+            $("#request-alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Only Spotify/YouTube links are supported. "));
+        } else {
+            $.post('https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec', data)
+                .done(function (data) {
+                    console.log(data);
+                    if (data.result === "error") {
+                        $('#request-alert-wrapper').html(alert_markup('danger', data.message));
+                    } else {
+                        $('#request-alert-wrapper').html(alert_markup('success', 'Thank you for submitting a song request!'));
+                    }
+                })
+                .fail(function (data) {
+                    console.log(data);
+                    $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> There is some issue with the server. '));
+                });
+        }
+    });
 });
 var MD5 = function (e) {
     function a(e, a) {

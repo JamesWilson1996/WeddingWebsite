@@ -4,17 +4,7 @@ var TO_ADDRESS = "jamesawilson1996@gmail.com, beckyholden99@gmail.com"; // email
  * This method is the entry point.
  */
 function doPost(e) {
-
-  var mailData = e.parameters;
-
-  if (mailData.invite_code != "61125" && mailData.invite_code != "25116") { // validate invite code before saving data
-    Logger.log("Incorrect Invite Code");
-    return ContentService
-        .createTextOutput(JSON.stringify({"result":"error", "message": "Sorry, your invite code (" + mailData.invite_code + ") is incorrect."}))
-        .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  if (mailData.invoker == "requests") { // invoker is set on submission of the form to tell the API which route to go down
+  if (e.parameters.invoker == "requests") { // invoker is set on submission of the form to tell the API which route to go down
     var result = requests(e);
   }
   else {
@@ -32,6 +22,13 @@ function rsvp(e) {
     Logger.log(e); // the Google Script version of console.log see: Class Logger
 
     var mailData = e.parameters; // just create a slightly nicer variable name for the data
+
+    if (mailData.invite_code != "61125" && mailData.invite_code != "25116") { // validate invite code before saving data
+      Logger.log("Incorrect Invite Code");
+      return ContentService
+          .createTextOutput(JSON.stringify({"result":"error", "message": "Sorry, your invite code (" + mailData.invite_code + ") is incorrect."}))
+          .setMimeType(ContentService.MimeType.JSON);
+    }
 
     var update = compareValidEmail(mailData.email[0], "rsvp")
 
@@ -69,13 +66,13 @@ function requests(e) {
   try {
     Logger.log(e); // the Google Script version of console.log see: Class Logger
     
-    var mailData = e.parameters; // just create a slightly nicer variable name for the data
-    
-    var validEmail = compareValidEmail(mailData.requester[0], "requests");
+    var data = e.parameters; // just create a slightly nicer variable name for the data
+
+    var validEmail = compareValidEmail(data.requester[0], "requests");
 
     if (!validEmail.found) {
       return ContentService
-          .createTextOutput(JSON.stringify({"result":"error", "message": "Sorry, there is no RSVP response yet for your email (" + mailData.requester + ") or you have RSVP'd as unable to attend."}))
+          .createTextOutput(JSON.stringify({"result":"error", "message": "Sorry, there is no RSVP response yet for your email (" + data.requester + ") or you have RSVP'd as unable to attend."}))
           .setMimeType(ContentService.MimeType.JSON);
     }
 
