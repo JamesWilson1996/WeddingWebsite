@@ -29,10 +29,12 @@ function rsvp(e) {
 
   try {
     Logger.log(e); // the Google Script version of console.log see: Class Logger
-    
+
     var mailData = e.parameters; // just create a slightly nicer variable name for the data
-    
-    record_data(e, 'responses');
+
+    var update = compareValidEmail(mailData.email[0], "rsvp")
+
+    record_data(e, 'responses', update);
     
     MailApp.sendEmail({
       to: TO_ADDRESS,
@@ -61,15 +63,17 @@ function requests(e) {
     
     var mailData = e.parameters; // just create a slightly nicer variable name for the data
     
-    var validEmail = compareValidEmail(mailData);
+    var validEmail = compareValidEmail(mailData.requester[0], "requests");
 
-    if (!validEmail) {
+    if (!validEmail.found) {
       return ContentService
           .createTextOutput(JSON.stringify({"result":"error", "message": "Sorry, there is no RSVP response yet for your email (" + mailData.requester + ") or you have RSVP'd as unable to attend."}))
           .setMimeType(ContentService.MimeType.JSON);
     }
 
-    record_data(e, 'songRequests');
+    var update = {found: false} // Always insert for requests
+
+    record_data(e, 'songRequests', update);
 
     return ContentService    // return json success results
           .createTextOutput(JSON.stringify({"result":"success","data": JSON.stringify(e.parameters) }))
@@ -88,13 +92,18 @@ function requests(e) {
  * This method inserts the data received from the html form submission
  * into the sheet. e is the data received from the POST
  */
-function record_data(e, sheetName) {
+function record_data(e, sheetName, update) {
   Logger.log(JSON.stringify(e)); // log the POST data in case we need to debug it
   try {
     var doc     = SpreadsheetApp.getActiveSpreadsheet();
     var sheet   = doc.getSheetByName(sheetName); // select the responses sheet
     var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    
     var nextRow = sheet.getLastRow()+1; // get next row
+    if (update.found) {
+      nextRow = update.loc +1
+    }
+
     var row     = [ new Date().toUTCString() ]; // first element in the row should always be a timestamp
     // loop through the header columns
     for (var i = 1; i < headers.length; i++) { // start at 1 to avoid Timestamp column
@@ -118,25 +127,43 @@ function record_data(e, sheetName) {
 /**
  * This method checks if the user email exists in the responses sheet.
  */
-function compareValidEmail(mailData) {
+function compareValidEmail(email, invoker) {
   try {
     var doc     = SpreadsheetApp.getActiveSpreadsheet();
     var responsesSheet   = doc.getSheetByName('responses'); // select the responses sheet
-    var emailRange = responsesSheet.getRange('B2:C');
+    var emailRange = responsesSheet.getRange('B1:C');
     var emails = emailRange.getValues();
     
     // Convert the input email to lowercase for case-insensitive comparison
-    var inputEmail = mailData.requester[0].trim().toLowerCase();
+    var inputEmail = email.trim().toLowerCase();
+
+    var result = {
+      found: false,
+      loc: null
+    }
 
     for (var i = 0; i < emails.length; i++) {
       var email = emails[i][1].trim().toLowerCase(); // Trim and convert to lowercase
       if (email === inputEmail) {
-        if (emails[i][0] === "yes") {
-          return true
+        if (invoker === "requests") {
+          if (emails[i][0] === "yes") {
+            result = {
+              found: true,
+              loc: i
+            }
+            return result
+          }
         }
+        else {
+          result = {
+              found: true,
+              loc: i
+            }
+          return result
+        }        
       }
     }
-    return false
+    return result
   }
   catch(error) {
     Logger.log(error);
