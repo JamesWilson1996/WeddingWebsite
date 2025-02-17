@@ -136,7 +136,7 @@ $(document).ready(function () {
             if (MD5($('#invite_code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb' && MD5($('#invite_code').val()) !== '5f22e82f3d2c279d57c76a0513276abb') {
                 $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."));
             } else {
-                $.post("https://script.google.com/macros/s/AKfycby_uwBXKeB334X0OF5jVvkh9t0TxrE66XOH-TtmalpVL3oPR3b69WvjijfiPRJx3WNJDQ/exec", a)
+                $.post("https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec", a)
                           .done(function (e) {
                               console.log(e),
                                   "error" === e.result
@@ -152,12 +152,11 @@ $(document).ready(function () {
             e.preventDefault();
             var data = $(this).serialize();
             data = data.concat("&invoker=requests");
-            $('#request-alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your details.'));
-    
-            if (MD5($('#code').val()) !== 'cc485beea0bdcdb7ad2fa1e7213bd4eb' && MD5($('#code').val()) !== '5f22e82f3d2c279d57c76a0513276abb') {
-                $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
+            $('#request-alert-wrapper').html(alert_markup('info', '<strong>Just a sec!</strong> We are saving your request.'));
+            if (!$("#song_url").val().includes("spotify") && !$("#song_url").val().includes("youtube") && !$("#song_url").val().includes("youtu.be")) {
+                $("#request-alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Only Spotify/YouTube links are supported. "));
             } else {
-                $.post('https://script.google.com/macros/s/AKfycby_uwBXKeB334X0OF5jVvkh9t0TxrE66XOH-TtmalpVL3oPR3b69WvjijfiPRJx3WNJDQ/exec', data)
+                $.post('https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec', data)
                     .done(function (data) {
                         console.log(data);
                         if (data.result === "error") {
