@@ -135,7 +135,7 @@ $(document).ready(function () {
             $("#alert-wrapper").html(alert_markup("info", "<strong>Just a sec!</strong> We are saving your details.")),
                 "cc485beea0bdcdb7ad2fa1e7213bd4eb" !== MD5($("#invite_code").val()) && "9e20abcf5889d4c8745cb43ce925e49e" !== MD5($("#invite_code").val())
                     ? $("#alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Your invite code is incorrect."))
-                    : $.post("https://script.google.com/macros/s/AKfycbxL9s2nJKdFxCxMU6gvaijiZx0VLnJo2q5KTm-vqp_Od1ydCpFYR04yfH0SssA5vnPP0A/exec", a)
+                    : $.post("https://script.google.com/macros/s/AKfycbxyr4qWdB0L26eTidahermTtRB0quO8k7xZxiiCNAI0_FD30ex7QmuoNc586my_-I7Ptg/exec", a)
                           .done(function (e) {
                               console.log(e),
                                   "error" === e.result
@@ -156,7 +156,7 @@ $(document).ready(function () {
                 && MD5($('#code').val()) !== '9e20abcf5889d4c8745cb43ce925e49e') {
                 $('#request-alert-wrapper').html(alert_markup('danger', '<strong>Sorry!</strong> Your invite code is incorrect.'));
             } else {
-                $.post('https://script.google.com/macros/s/AKfycbxL9s2nJKdFxCxMU6gvaijiZx0VLnJo2q5KTm-vqp_Od1ydCpFYR04yfH0SssA5vnPP0A/exec', data)
+                $.post('https://script.google.com/macros/s/AKfycbxyr4qWdB0L26eTidahermTtRB0quO8k7xZxiiCNAI0_FD30ex7QmuoNc586my_-I7Ptg/exec', data)
                     .done(function (data) {
                         console.log(data);
                         if (data.result === "error") {
