@@ -144,7 +144,7 @@ $(document).ready(function () {
             });
             $("#add-to-cal").html(r)
 
-            $.post("https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec", a)
+            $.post("https://script.google.com/macros/s/AKfycbxcKzYIy_2ZHwdLnwj8I5QB6DzZHegEOpN4Q2BhVmRJTNr3gdhBJgOhXx-xdSjc_4sXdQ/exec", a)
                         .done(function (e) {
                             console.log(e),
                                 "error" === e.result
@@ -164,7 +164,7 @@ $(document).ready(function () {
         if (!$("#song_url").val().includes("spotify") && !$("#song_url").val().includes("youtube") && !$("#song_url").val().includes("youtu.be")) {
             $("#request-alert-wrapper").html(alert_markup("danger", "<strong>Sorry!</strong> Only Spotify/YouTube links are supported. "));
         } else {
-            $.post('https://script.google.com/macros/s/AKfycbxDbyqMStPaZIGkRvRbGSnrHA2kerkvnHPDdbCvL59PJc1eOrSbv4Bo8Cxcb8kwRBKRZQ/exec', data)
+            $.post('https://script.google.com/macros/s/AKfycbxcKzYIy_2ZHwdLnwj8I5QB6DzZHegEOpN4Q2BhVmRJTNr3gdhBJgOhXx-xdSjc_4sXdQ/exec', data)
                 .done(function (data) {
                     console.log(data);
                     if (data.result === "error") {
